@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/TylerLadas/NoSQL-Challenge-Social-Network-API/issues"
   },
-  "homepage": "https://github.com/TylerLadas/NoSQL-Challenge-Social-Network-API#readme"
+  "homepage": "https://github.com/TylerLadas/NoSQL-Challenge-Social-Network-API#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.6"
+  }
 }
