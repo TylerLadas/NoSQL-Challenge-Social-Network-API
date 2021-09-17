@@ -15,14 +15,14 @@ const userController = {
     // get one user by id and populate thought and friend data
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
-        // .populate({
-        //     path: 'comments',
-        //     select: '-__v'
-        // })
-        // .populate({
-        //     path: 'friends',
-        //     select: '-__v'
-        // })
+        .populate({
+            path: 'comments',
+            select: '-__v'
+        })
+        .populate({
+            path: 'friends',
+            select: '-__v'
+        })
         .select('-__v')
         .then(dbUserData => {
             if (!dbUserData) {
