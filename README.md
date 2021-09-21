@@ -38,7 +38,7 @@ npm start
 
 ## Usage
 
-Please view the demo video of testing the API routes at the provided url: 
+Please view the demo video of testing the API routes at the provided url: https://watch.screencastify.com/v/C85LL6Ymo4Z2r5Cao510
 
 ## License
     
