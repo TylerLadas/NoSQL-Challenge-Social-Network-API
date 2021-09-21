@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Thought } = require('../models')
 
 const userController = {
     
@@ -74,18 +74,16 @@ const userController = {
                     res.status(404).json({ message: 'No user with this id!' });
                     return;
                 }
-                // return Thought.find(
-                //     { _id: params.pizzaId },
-                //     { $pull: { comments: params.commentId } },
-                //     { new: true }
-                // );
-            // })
-            // .then(dbPizzaData => {
-            //     if (!dbPizzaData) {
-            //         res.status(404).json({ message: 'No pizza found with this id!' });
-            //         return;
-            //     }
-                res.json(deletedUser);
+                return deletedUser;
+                // res.json(deletedUser);
+            })
+            .then(deletedUser => {
+                Thought.deleteMany(
+                    { username: deletedUser.username})
+                    .then(() => {
+                        res.json({ message: 'User and associated thoughts successfully deleted!' })
+                    })
+                    .catch(err => res.status(400).json(err));
             })
             .catch(err => res.status(400).json(err));
         },   

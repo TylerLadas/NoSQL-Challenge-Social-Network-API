@@ -30,13 +30,13 @@ const thoughtController = {
     },
 
     // create thought
-    createThought({ body }, res) {
+    createThought({ params, body }, res) {
         Thought.create(body)
-        .then(({ dbThoughtData }) => {
+        .then(({ _id }) => {
             return User.findOneAndUpdate(
-                { _id: body.userId},
-                { $push: { thoughts: dbThoughtData }},
-                { new: true }
+                { _id: params.userId},
+                { $push: { thoughts: _id } },
+                { new: true, runValidators: true }
             );
         })
         .then(dbUserData => {
@@ -78,9 +78,10 @@ const thoughtController = {
     // post a reaction
     postReaction({ params, body}, res) {
         Thought.findOneAndUpdate(
-            { _id: params.id },
+            { _id: params.thoughtId },
             { $push: { reactions: body}},
             { new: true, runValidators: true })
+            .select('-__v')
             .then(dbThoughtData => {
                 if (!dbThoughtData) {
                     res.status(404).json({ message: 'No thought with this id!' });
@@ -94,7 +95,7 @@ const thoughtController = {
     // delete a reaction
     deleteReaction({ params }, res) {
         Thought.findOneAndUpdate(
-            { _id: params.id },
+            { _id: params.thoughtId },
             { $pull: { reactions: { reactionId: params.reactionId }}},
             { new: true })
             .then(dbThoughtData => res.json(dbThoughtData))
